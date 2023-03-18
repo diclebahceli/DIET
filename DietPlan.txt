@@ -66,4 +66,24 @@ expression  === is the right hand side of the equality
 
 <block> ::= <statement> | <statement><statement-sequence>
 
+<if-statement> ::= "if" "(" <condition-sequance> ")" "{" <block "}" |
+
+                    if(<condition-sequance>){ <block> } else {<block>} |
+
+                    if(<condition-sequance>){ <block> } 
+                    else if(<condition-sequance>){ <block } |
+
+                    if(<condition-sequance>){ <block> } 
+                    else if(<condition-sequance>){ <block> } 
+                    else{ <block> }
+
+<while-statement> ::= while(<condition-sequance>){ <block> }
+
+<statement> ::= <declaration> | <assignment> | <if-statement> 
+        | <while-statement> | <block> 
+
+<comment> ::= .. <_anycharacter_>* | ... <_anycharacter_>* ...
+
+<functions> ::= df {<type> | void} <identifier>(<variable>*){ <block> }
+
 
