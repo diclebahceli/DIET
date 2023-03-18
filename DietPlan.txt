@@ -1,0 +1,69 @@
+-- DIET --
+
+
+
+----------------------------------------------------------------------------
+_anycharacter_ === is any printible ascii
+identifier === is the variable name
+expression  === is the right hand side of the equality
+---------------------------------------------e------------------------------
+
+
+
+
+<digit> ::="0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+<nonzero> ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+<integer> ::= <digit> | <nonzero><integer> 
+                | -<digit> | -<nonzero><integer> 
+
+
+<float> ::= <integer>.<integer> | <integer>.<integer>
+    -<integer>.<integer> | -<integer>.<integer>
+
+
+<letter> ::="a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" 
+| "l" | "m" | "n" | "o" | "p" | "r" | "s" | "t" | "u" | "v" | "y" | "z" 
+| "w" | "x" | | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" 
+| "K" | "L" | "M" | "N" | "O" | "P" | "R" | "S" | "T" | "U" | "V" | "Y" 
+| "Z" | "W" | "X"
+
+<word> ::= <letter> | <letter><word>
+
+<symbol> ::="Space" | "!" | """ | "#" | "$" | "%" | "&" | "'" | "(" | ")" 
+| "*" | "+" | | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" 
+| "[" | "" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~" | "DEL" | "TAB"
+
+<character> ::=  <symbol> | <letter> | <digit>
+
+<str> ::= "<any_character>*"
+-- any printable ASCII character
+
+<boolean> ::= "true" | "false"
+
+<type> ::= "int" | "float" | "bool" | "string" 
+
+<conditionalOp> ::= "==" | "!=" | "<" | ">" | "<=" | ">="
+
+<multiplicationOp> ::= "*" | "/"
+
+<arithmaticOp> ::= "+" | "-"
+
+<literal> ::= <integer> | <string> | <float> | <boolean>
+
+<identifier> ::= <letter> <letter>* | <digit>* | _*
+
+<expression> ::= <literal> | <expression> <operator> <expression>
+
+<variable> ::= <type> <identifier>
+
+<declaration> ::= <variable> "=" <expression>
+
+<assignment> ::= <identifier> "=" <expression>
+
+<condition> ::= {<literal> | <identifier>} <conditionalOp> {<literal> | <identifier>}
+
+<condition-sequance> ::= <condition> | <condition><condition-sequance>
+
+<block> ::= <statement> | <statement><statement-sequence>
+
+
