@@ -1,25 +1,14 @@
 -- DIET --
 
-
-
-----------------------------------------------------------------------------
-_anycharacter_ === is any printible ascii
-identifier === is the variable name
-expression  === is the right hand side of the equality
----------------------------------------------e------------------------------
-
-
-
+<sign> ::= "+" | "-"
 
 <digit> ::="0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
 <nonzero> ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-<integer> ::= <digit> | <nonzero><integer> 
-                | -<digit> | -<nonzero><integer> 
 
+<integer> ::= [ <sign> ] (<digit> | <nonzero>{<digit>}) 
 
-<float> ::= <integer>.<integer> | <integer>.<integer>
-    -<integer>.<integer> | -<integer>.<integer>
-
+<float> ::= [ <sign> ] (<digit> |  { <nonzero> {<digit>} ) "." { <digit> }
 
 <letter> ::="a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" 
 | "l" | "m" | "n" | "o" | "p" | "r" | "s" | "t" | "u" | "v" | "y" | "z" 
@@ -27,20 +16,20 @@ expression  === is the right hand side of the equality
 | "K" | "L" | "M" | "N" | "O" | "P" | "R" | "S" | "T" | "U" | "V" | "Y" 
 | "Z" | "W" | "X"
 
-<word> ::= <letter> | <letter><word>
+<word> ::= <letter>{<letter>}
 
-<symbol> ::="Space" | "!" | """ | "#" | "$" | "%" | "&" | "'" | "(" | ")" 
+<symbol> ::= "!" | """ | "#" | "$" | "%" | "&" | "'" | "(" | ")" 
 | "*" | "+" | | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" 
-| "[" | "" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~" | "DEL" | "TAB"
+| "[" | "" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~" | 
 
-<character> ::=  <symbol> | <letter> | <digit>
-
-<str> ::= "<any_character>*"
+<char> ::= "'"<any_character>"'"
 -- any printable ASCII character
+
+<string> ::= '"'{<character>}'"'
 
 <boolean> ::= "true" | "false"
 
-<type> ::= "int" | "float" | "bool" | "string" 
+<type> ::= "int" | "flt" | "boo" | "str" | "char"
 
 <conditionalOp> ::= "==" | "!=" | "<" | ">" | "<=" | ">="
 
@@ -48,42 +37,39 @@ expression  === is the right hand side of the equality
 
 <arithmaticOp> ::= "+" | "-"
 
+<operator> ::= "*" | "/" | "+" | "-"
+
 <literal> ::= <integer> | <string> | <float> | <boolean>
 
-<identifier> ::= <letter> <letter>* | <digit>* | _*
+<identifier> ::= <letter> ({<letter>} | {<digit>} | {_})
 
-<expression> ::= <literal> | <expression> <operator> <expression>
+<expression> ::= <literal> {<operator><literal>}
 
 <variable> ::= <type> <identifier>
+
+<parameter> ::= <type> <identifier>
 
 <declaration> ::= <variable> "=" <expression>
 
 <assignment> ::= <identifier> "=" <expression>
 
-<condition> ::= {<literal> | <identifier>} <conditionalOp> {<literal> | <identifier>}
+<condition> ::= [!] (<literal> | <identifier>) <conditionalOp> (<literal> | <identifier>) 
 
-<condition-sequance> ::= <condition> | <condition><condition-sequance>
-
-<block> ::= <statement> | <statement><statement-sequence>
-
-<if-statement> ::= "if" "(" <condition-sequance> ")" "{" <block "}" |
-
-                    if(<condition-sequance>){ <block> } else {<block>} |
-
-                    if(<condition-sequance>){ <block> } 
-                    else if(<condition-sequance>){ <block } |
-
-                    if(<condition-sequance>){ <block> } 
-                    else if(<condition-sequance>){ <block> } 
-                    else{ <block> }
-
-<while-statement> ::= while(<condition-sequance>){ <block> }
+<condition-sequance> ::= <condition> {("&" | "|") <condition>} 
 
 <statement> ::= <declaration> | <assignment> | <if-statement> 
         | <while-statement> | <block> 
 
-<comment> ::= .. <_anycharacter_>* | ... <_anycharacter_>* ...
+<block> ::= <statement>{<statement>}
 
-<functions> ::= df {<type> | void} <identifier>(<variable>*){ <block> }
+<if-statement> ::= "if" "(" <condition-sequance> ")" "{" <block "}" 
+			{ "elsif" "("<condition-sequance>")" "{" <block "}" }
+			["else" "{" <block> "}"]
+
+<while-statement> ::= "while" "(" <condition-sequance> ")" "{" <block> "}"
+
+<comment> ::= ".." {<_anycharacter_>} | "..." {<_anycharacter_>} "..."
+
+<functions> ::= "df" (<type> | "void") <identifier> "("{<parameter>}")" "{" <block> "}"
 
 
