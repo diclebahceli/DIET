@@ -1,0 +1,18 @@
+df(int number){
+    str name = "Samet";
+    int counter = 5632;
+    flt money = -237.654;
+    flt newMoney = 8.8;
+    boo condition= true;
+    chr mark = 'd';
+    while(condition==true){
+        counter = counter+1;
+        condition = false;
+    }
+
+    if(mark!='a' & condition==false){
+        money = newMoney;
+    }
+ 
+
+}

@@ -10,14 +10,6 @@ letter      [a-zA-Z]
 nonzero     [1-9]
 type        int|flt|boo|str|chr
 
-sign        [+|-]
-plus        [+]
-minus       [-]
-divide      [/]
-mult        [*]
-equals      [=]
-underscore  [_]
-operator    [*|/|+|-]
 
 checkEquals (==)
 checkNot    (!=)
@@ -30,9 +22,19 @@ conditionalOp   (==|!=|<|>|<=|>=)
 
 string      ["][^"]*["]
 char        ['][^'"][']
-integer     ({sign}?({digit}|{nonzero}{digit}*)) 
-float       ({sign}?{integer}\.{digit}*) 
+integer     (({digit}|{nonzero}{digit}*)) 
+float       ({integer}\.{digit}*) 
 bool        true|false
+
+
+sign        [+|-]
+plus        [+]
+minus       [-]
+divide      [/]
+mult        [*]
+equals      [=]
+underscore  [_]
+operator    [*|/|+|-]
 
 identifier  ({letter}|[_])({letter}|{digit}|[_])*
 literal     {integer}|{string}|{bool}|{char}|{float}
@@ -71,6 +73,10 @@ return                  {printf("RETURN ");}
 "{"                     { printf("LBRACE "); }
 
 "}"                     { printf("RBRACE "); }
+
+"&"                     { printf("AND "); }
+
+"|"                     { printf("OR "); }
 
 {checkBigger}           {printf("GREATER ");}
 
