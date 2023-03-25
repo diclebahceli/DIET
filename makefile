@@ -1,5 +1,5 @@
 myprog: myprog.l
-	lex myprog.l
+	lex  myprog.l
 	gcc -o myprog.dt lex.yy.c -ll
 
 clean:

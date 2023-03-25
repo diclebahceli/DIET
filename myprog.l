@@ -17,6 +17,7 @@ divide      [/]
 mult        [*]
 equals      [=]
 underscore  [_]
+operator    [*|/|+|-]
 
 checkEquals (==)
 checkNot    (!=)
@@ -24,6 +25,7 @@ checkBigger (>)
 checkSmall  (<)
 checkBigEq  (>=)
 checkSmalEq (<=)
+conditionalOp   (==|!=|<|>|<=|>=)
 
 
 string      ["][^"]*["]
@@ -34,16 +36,62 @@ bool        true|false
 
 identifier  ({letter}|[_])({letter}|{digit}|[_])*
 literal     {integer}|{string}|{bool}|{char}|{float}
+expression  {literal}([\ ]*{operator}[\ ]*{literal})*
+variable    {type}[\ ]*{identifier}
+parameter   {type}[\ ]*{identifier}
+declaration {variable}[\ ]*[=][\ ]*{expression}
+assignment  {identifier}[\ ]*[=][\ ]*{expression}
+condition   [!]?({literal}|{identifier})[\ ]*{conditionalOp}[\ ]*({literal}|{identifier})
+block       {statement}+
+condition-sequence  {condition}[\ ]*([&||][\ ]*{condition})*
+statement   {declaration}|{assignment}|{if-statement}|{block}
+
+
 
 %% 
 
-{bool}                  printf("BOOLEAN ");
+if                      { printf("IF "); }
 
-{type}                  printf("TYPE ");
+elsif                   { printf("ELSIF "); }
 
-{identifier}            { printf("IDENTIFIER "); }
+else                    { printf("ELSE "); }
 
-{equals}                printf("EQUALS ");
+while                   {printf("WHILE ");}
+
+df                      {printf("FUNCTION ");}
+
+return                  {printf("RETURN ");}
+
+".."                    {printf("COMMENT LINE ");}
+
+"("                     { printf("LPAREN "); }
+
+")"                     { printf("RPAREN "); }
+
+"{"                     { printf("LBRACE "); }
+
+"}"                     { printf("RBRACE "); }
+
+{checkBigger}           {printf("GREATER ");}
+
+{checkEquals}           {printf("EQUALS ");}
+
+{checkNot}              {printf("NOT EQUALS ");}
+
+{checkSmalEq}           {printf("SMALLER OR EQUALS ");}
+
+{checkBigEq}            {printf("GREATER OR EQUALS ");}
+
+
+{checkSmall}            {printf("SMALLER ");}
+
+{bool}                  {printf("BOOLEAN ");}
+
+{type}                  { printf("TYPE ");}
+
+{identifier}            { printf("IDENTIFIER ");}
+
+{equals}                { printf("EQUALS ");}
 
 {plus}                  { printf("PLUS "); } 
 
@@ -55,25 +103,22 @@ literal     {integer}|{string}|{bool}|{char}|{float}
 
 {integer}               { printf("INTEGER ");}
 
-{float}                 printf("FLOAT ");
+{float}                 { printf("FLOAT ");}
 
 
-;   	    	        printf("SEMICOLON ");
+;   	    	        { printf("SEMICOLON ");}
 
 {string}                { printf("STRING "); }
 
-{char}                  printf("CHARACTER ");
+{char}                  { printf("CHARACTER ");}
 
-\n                      printf("\n");
-
-
-
-
+\n                      {printf("\n");}
 
 {whitespace}            ;
 
+.			            { printf("Syntax Error! ");}
 
-.			            printf("Syntax Error! ");
+
 
 %%
 
