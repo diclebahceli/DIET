@@ -13,6 +13,19 @@ df(int number){
     if(mark!='a' & condition==false){
         money = newMoney;
     }
- 
+    elsif(mark<='z' | newMoney>=7){
+        money = 9/3;
+        newMoney = 8*5;
+    }
+    else{
+        money = 8+6;
+        newMoney = 88-14;
+    }
+
+    boo = (75<=98) & (66!=1);
+
+    int b = 0;
+
+    return b;
 
 }
