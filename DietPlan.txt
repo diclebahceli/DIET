@@ -8,7 +8,7 @@
 
 <integer> ::= [ <sign> ] (<digit> | <nonzero>{<digit>}) 
 
-<float> ::= [ <sign> ] (<digit> |  { <nonzero> {<digit>} ) "." { <digit> }
+<float> ::= [ <sign> ] <integer> "." { <digit> }
 
 <letter> ::="a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" 
 | "l" | "m" | "n" | "o" | "p" | "r" | "s" | "t" | "u" | "v" | "y" | "z" 
@@ -41,7 +41,7 @@
 
 <literal> ::= <integer> | <string> | <float> | <boolean>
 
-<identifier> ::= <letter> ({<letter>} | {<digit>} | {_})
+<identifier> ::= (<letter>|"_") ({<letter>} | {<digit>} | {_})
 
 <expression> ::= <literal> {<operator><literal>}
 
