@@ -83,4 +83,4 @@ Group Members: Recep Samet Yigitkalan, Dicle Bahceli
 - You can run your program by running the makefile and giving it to myprog as input:
 
 make
-./myprog < exampleprog1.dt
+./diet < exampleprog1.dt
