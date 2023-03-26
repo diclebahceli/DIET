@@ -9,7 +9,8 @@ digit       [0-9]
 letter      [a-zA-Z]
 nonzero     [1-9]
 type        int|flt|boo|str|chr
-
+comment     "``".*
+commentBlock "```"([^`]*|[\n]*)"```"
 
 checkEquals (==)
 checkNot    (!=)
@@ -21,9 +22,12 @@ conditionalOp   (==|!=|<|>|<=|>=)
 
 
 string      ["][^"]*["]
+charErr     ['][^'"].+[']
 char        ['][^'"][']
-integer     (({digit}|{nonzero}{digit}*)) 
-float       ({integer}\.{digit}*) 
+integer     ({digit}|({nonzero}{digit}+))
+integerErr  ([0]{digit}+)
+float       ({integer}[.]{digit}*) 
+floatErr    ({integerErr}[.]{digit}*)
 bool        true|false
 
 
@@ -50,7 +54,8 @@ statement   {declaration}|{assignment}|{if-statement}|{block}
 
 
 
-%% 
+ 
+%%
 
 if                      { printf("IF "); }
 
@@ -58,13 +63,15 @@ elsif                   { printf("ELSIF "); }
 
 else                    { printf("ELSE "); }
 
-while                   {printf("WHILE ");}
+while                   { printf("WHILE ");}
 
-df                      {printf("FUNCTION ");}
+df                      { printf("FUNCTION ");}
 
-return                  {printf("RETURN ");}
+return                  { printf("RETURN ");}
 
-".."                    {printf("COMMENT LINE ");}
+{commentBlock}          { printf("COMMENT BLOCK ");}
+
+{comment}               { printf("COMMENT LINE ");}
 
 "("                     { printf("LPAREN "); }
 
@@ -78,24 +85,17 @@ return                  {printf("RETURN ");}
 
 "|"                     { printf("OR "); }
 
-{checkBigger}           {printf("GREATER ");}
+{checkBigger}           { printf("GREATER ");}
 
-{checkEquals}           {printf("EQUALS ");}
+{checkEquals}           { printf("EQUALS ");}
 
-{checkNot}              {printf("NOT EQUALS ");}
+{checkNot}              { printf("NOT EQUALS ");}
 
-{checkSmalEq}           {printf("SMALLER OR EQUALS ");}
+{checkSmalEq}           { printf("SMALLER OR EQUALS ");}
 
-{checkBigEq}            {printf("GREATER OR EQUALS ");}
+{checkBigEq}            { printf("GREATER OR EQUALS ");}
 
-
-{checkSmall}            {printf("SMALLER ");}
-
-{bool}                  {printf("BOOLEAN ");}
-
-{type}                  { printf("TYPE ");}
-
-{identifier}            { printf("IDENTIFIER ");}
+{checkSmall}            { printf("SMALLER ");}
 
 {equals}                { printf("EQUALS ");}
 
@@ -107,26 +107,36 @@ return                  {printf("RETURN ");}
 
 {mult}                  { printf("MULTIPLY "); }
 
+{type}                  { printf("TYPE ");}
+
+{bool}                  { printf("BOOLEAN ");}
+
+{integerErr}            { printf("WRONGINTEGERFORMAT "); }
+
 {integer}               { printf("INTEGER ");}
+
+{floatErr}              { printf("WRONGFLOATFORMAT "); }
 
 {float}                 { printf("FLOAT ");}
 
-
-;   	    	        { printf("SEMICOLON ");}
-
 {string}                { printf("STRING "); }
+
+{charErr}               { printf("WRONGCHARFORMAT "); }
 
 {char}                  { printf("CHARACTER ");}
 
-\n                      {printf("\n");}
+{identifier}            { printf("IDENTIFIER ");}
+
+;   	    	        { printf("SEMICOLON ");}
+
+\n                      { printf("\n");}
 
 {whitespace}            ;
 
-.			            { printf("Syntax Error! ");}
-
-
+.			            { printf("SYNTAX ERROR! ");}
 
 %%
+
 
 int main(void) {
     yylex();
