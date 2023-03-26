@@ -1,6 +1,6 @@
-myprog: myprog.l
-	lex  myprog.l
-	gcc -o myprog.dt lex.yy.c -ll
+diet: diet.l
+	lex  diet.l
+	gcc -o example.dt lex.yy.c -ll
 
 clean:
-	rm myprog.dt lex.yy.c
+	rm example.dt lex.yy.c
